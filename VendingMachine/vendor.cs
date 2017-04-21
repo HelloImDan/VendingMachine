@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Threading;
 
 namespace VendingMachine
 {
@@ -69,6 +70,7 @@ namespace VendingMachine
         public void ItemSelection()
         {
             Console.Clear();    //Clear the console for text to be written
+            Console.WriteLine("********* Available Ballance: " + balance + " *********");  //Show available ballance
             Console.WriteLine("********* Choose your item *********");  //Tell user what to do
             Console.WriteLine("");  //Spacer
 
@@ -92,25 +94,21 @@ namespace VendingMachine
                     int item = Convert.ToInt16(itemChoice); //Convert to a int and store as coins
                     int i = item - 1; // Slected item -1 because it is in array
                     string[] itemStrip = items[i].Replace(" ", "").Split('*');
-                    Console.WriteLine("Are you sure you want to purchase " + itemStrip[1] + "? [y,n]"); //Confirmation of purchase
+                    Console.WriteLine("Are you sure you want to purchase " + itemStrip[1] + "? [y, any button]"); //Confirmation of purchase
                     string ans = Console.ReadLine(); // Get users answer
                         switch (ans) //switch case for users answer
                         {
                             case "y":
                                 PurchaseItem(itemStrip); //purchase item function
                                 break;
-                            case "n":
+                            default:
                                 ItemSelection(); //reset chosen item and restart
                                 break;
-                            default:
-                                Console.WriteLine("*** Please enter a valid command ***"); //Display error
-                                Console.WriteLine("*** Y = Yes | N = No ***");  //Display what user should put
-                                break;  //Exit the switch case
                     }
                     break;  //Exit the switch case
 
                 default:
-                    Console.WriteLine("*** Please enter a valid item ID [1, 2, 3, 4] ***");    //Tell user the value was not accepted and show accepted values
+                    ItemSelection(); //User enter invalid command so send to begining of segment
                     break;  //Exit the switch case
 
             }
@@ -141,12 +139,16 @@ namespace VendingMachine
                 }
             }
             else{
-                balance = price - balance;  //Update balance to item balance - price
+                balance = balance - price;  //Update balance to item balance - price
+                if(balance < 0)
+                {
+                    balance = 0;
+                }
                 Console.Clear();
                 Console.WriteLine("*** Purchase Successfull ***");
                 Console.WriteLine("*** Your " + name + " is ready to be collected ***");
                 Console.WriteLine("You have " + balance + " left in your account.");
-                Console.WriteLine("Would you like to continue shopping? [y,n]");
+                Console.WriteLine("Would you like to continue shopping? [y, any button ]");
 
                 string ans = Console.ReadLine(); // Get users answer
                 switch (ans) //switch case for users answer
@@ -154,13 +156,9 @@ namespace VendingMachine
                     case "y":
                         ItemSelection(); //purchase item function
                         break;
-                    case "n":
+                    default:
                         exit();
                         break;
-                    default:
-                        Console.WriteLine("*** Please enter a valid command ***"); //Display error
-                        Console.WriteLine("*** Y = Yes | N = No ***");  //Display what user should put
-                        break;  //Exit the switch case
                 }
             }
             
@@ -171,8 +169,16 @@ namespace VendingMachine
         public void exit()
         {
             Console.Clear();
-            Console.WriteLine("*** " + balance + " is ready to be collected ***");  //Show user he can collect is coins
+            if (balance == 0)
+            {
+                Console.WriteLine("*** Your balance is empty. ***");  //Show user he can collect is coins
+            }else
+            {
+                Console.WriteLine("*** " + balance + " is ready to be collected ***");  //Show user he can collect is coins
+            }
+           
             Console.WriteLine("*** Thank You For Shopping At Dan's Vending Machine ***");  //Dont forget to SMASH that like button!!!!!11
+            Thread.Sleep(1000);
         }
         #endregion
     }
