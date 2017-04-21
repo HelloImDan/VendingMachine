@@ -19,7 +19,6 @@ namespace VendingMachine
         ConsoleKeyInfo keyinfo; //Console key info is shortened to keyinfo
         #endregion
 
-
         #region User Money Input
         public void moneyInput(string inputValCoins)
         {
