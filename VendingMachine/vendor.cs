@@ -141,9 +141,38 @@ namespace VendingMachine
                 }
             }
             else{
+                balance = price - balance;  //Update balance to item balance - price
+                Console.Clear();
+                Console.WriteLine("*** Purchase Successfull ***");
+                Console.WriteLine("*** Your " + name + " is ready to be collected ***");
+                Console.WriteLine("You have " + balance + " left in your account.");
+                Console.WriteLine("Would you like to continue shopping? [y,n]");
 
+                string ans = Console.ReadLine(); // Get users answer
+                switch (ans) //switch case for users answer
+                {
+                    case "y":
+                        ItemSelection(); //purchase item function
+                        break;
+                    case "n":
+                        exit();
+                        break;
+                    default:
+                        Console.WriteLine("*** Please enter a valid command ***"); //Display error
+                        Console.WriteLine("*** Y = Yes | N = No ***");  //Display what user should put
+                        break;  //Exit the switch case
+                }
             }
-            balance = price + balance;  //Update balance to item balance - price
+            
+        }
+        #endregion
+
+        #region User Exit
+        public void exit()
+        {
+            Console.Clear();
+            Console.WriteLine("*** " + balance + " is ready to be collected ***");  //Show user he can collect is coins
+            Console.WriteLine("*** Thank You For Shopping At Dan's Vending Machine ***");  //Dont forget to SMASH that like button!!!!!11
         }
         #endregion
     }
