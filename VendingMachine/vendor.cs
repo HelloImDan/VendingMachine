@@ -15,12 +15,14 @@ namespace VendingMachine
         #region Variable Decloration
         //Setup vars
         public int balance = 0;
+        ConsoleKeyInfo keyinfo; //Console key info is shortened to keyinfo
         #endregion
 
 
         #region User Money Input
         public void moneyInput(string inputValCoins)
         {
+            
             switch (inputValCoins)
             {
                 //If inputValCoins is 10, 20 or 50
@@ -36,7 +38,6 @@ namespace VendingMachine
                     Console.WriteLine("*** Current Balance: " + balance + " ***");  //Show user their ballance was sucessfully updated and their current balance
                     Console.WriteLine("*** Input More Money or Press 'c' to Continue ***"); //Give user new instructions
 
-                    ConsoleKeyInfo keyinfo; //Console key info is shortened to keyinfo
                     keyinfo = Console.ReadKey(); //keyinfo is used to read the key being pressed
 
                     if (keyinfo.Key == ConsoleKey.C) //If the pressed key is == to C
@@ -44,8 +45,10 @@ namespace VendingMachine
                         ItemSelection();    //Go to the function to display the current items in the vending machine
                     }else
                     {
-                        inputValCoins = Console.ReadLine(); //users input is a string. Store the input as strCoins
-                        moneyInput(inputValCoins); //go to the money input function (Back to the start)
+                        Console.Clear();
+                        Console.WriteLine("*** Input Your Money ***"); //Let user know what we want
+                        string inputCoins = Console.ReadLine(); //users input is a string. Store the input as strCoins.
+                        moneyInput(inputCoins);    //Go to the function to add money
                     }
                     break;  //Exit the switch case
                 
@@ -74,13 +77,14 @@ namespace VendingMachine
             {
                 Console.WriteLine(n);    //Write the line
             }
+
             Console.WriteLine("");  //Spacer
             Console.WriteLine("********* Enter Your Choice *********");  //Tell user what to do
 
             string itemChoice = Console.ReadLine(); //Users selected item 
+
             switch (itemChoice)
             {
-                //If inputValCoins is 10, 20 or 50
                 case "1":
                 case "2":
                 case "3":
@@ -93,20 +97,53 @@ namespace VendingMachine
                         switch (ans) //switch case for users answer
                         {
                             case "y":
-                                Console.WriteLine(itemStrip);
-                                Console.ReadLine();
-                                //PurchaseItem(); //purchase item function
+                                PurchaseItem(itemStrip); //purchase item function
                                 break;
                             case "n":
                                 ItemSelection(); //reset chosen item and restart
                                 break;
-                        }
+                            default:
+                                Console.WriteLine("*** Please enter a valid command ***"); //Display error
+                                Console.WriteLine("*** Y = Yes | N = No ***");  //Display what user should put
+                                break;  //Exit the switch case
+                    }
                     break;  //Exit the switch case
+
                 default:
                     Console.WriteLine("*** Please enter a valid item ID [1, 2, 3, 4] ***");    //Tell user the value was not accepted and show accepted values
                     break;  //Exit the switch case
 
             }
+        }
+        #endregion
+
+        #region Item Purchase
+        public void PurchaseItem(string[] itemStrip)
+        {
+            var p = itemStrip[2]; //Price is equal to 3rd item in array
+            var name = itemStrip[1];  //Name is equal to 2nd item in array
+            int price = Convert.ToInt16(p); //Convert to int and store as price
+
+            if (balance < price) //If users ballance is less than the items price (user does not have enough balance to purchase the item)
+            {
+                Console.Clear(); //Clear the console
+                Console.WriteLine("*** You do not have enough money to purchase that item. ***");
+                Console.WriteLine("*** Please add more by pressing 'A'. ***");
+
+                keyinfo = Console.ReadKey(); //keyinfo is used to read the key being pressed
+
+                if (keyinfo.Key == ConsoleKey.A) //If the pressed key is == to A
+                {
+                    Console.Clear();
+                    Console.WriteLine("*** Input Your Money ***"); //Let user know what we want
+                    string inputValCoins = Console.ReadLine(); //users input is a string. Store the input as strCoins.
+                    moneyInput(inputValCoins);    //Go to the function to add money
+                }
+            }
+            else{
+
+            }
+            balance = price + balance;  //Update balance to item balance - price
         }
         #endregion
     }
