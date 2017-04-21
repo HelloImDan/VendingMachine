@@ -36,7 +36,7 @@ namespace VendingMachine
 
                     Console.Clear();    //Clear the console for new text to be written
 
-                    Console.WriteLine("*** Current Balance: " + balance + " ***");  //Show user their ballance was sucessfully updated and their current balance
+                    Console.WriteLine("*** Current Balance: " + balance + "p ***");  //Show user their ballance was sucessfully updated and their current balance
                     Console.WriteLine("*** Input More Money or Press 'c' to Continue ***"); //Give user new instructions
 
                     keyinfo = Console.ReadKey(); //keyinfo is used to read the key being pressed
@@ -70,7 +70,7 @@ namespace VendingMachine
         public void ItemSelection()
         {
             Console.Clear();    //Clear the console for text to be written
-            Console.WriteLine("********* Available Ballance: " + balance + " *********");  //Show available ballance
+            Console.WriteLine("********* Available Ballance: " + balance + "p *********");  //Show available ballance
             Console.WriteLine("********* Choose your item *********");  //Tell user what to do
             Console.WriteLine("");  //Spacer
 
@@ -93,7 +93,7 @@ namespace VendingMachine
                 case "4":
                     int item = Convert.ToInt16(itemChoice); //Convert to a int and store as coins
                     int i = item - 1; // Slected item -1 because it is in array
-                    string[] itemStrip = items[i].Replace(" ", "").Split('*');
+                    string[] itemStrip = items[i].Replace(" ", "").Replace("p", "").Split('*'); 
                     Console.WriteLine("Are you sure you want to purchase " + itemStrip[1] + "? [y, any button]"); //Confirmation of purchase
                     string ans = Console.ReadLine(); // Get users answer
                         switch (ans) //switch case for users answer
@@ -147,7 +147,7 @@ namespace VendingMachine
                 Console.Clear();
                 Console.WriteLine("*** Purchase Successfull ***");
                 Console.WriteLine("*** Your " + name + " is ready to be collected ***");
-                Console.WriteLine("You have " + balance + " left in your account.");
+                Console.WriteLine("You have " + balance + "p left in your account.");
                 Console.WriteLine("Would you like to continue shopping? [y, any button ]");
 
                 string ans = Console.ReadLine(); // Get users answer

@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*  
+ *  Author : Daniel
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +15,6 @@ namespace VendingMachine
         static void Main(string[] args)
         {
             vendor v = new vendor();
-
 
             Console.Clear();    //Clear console
             Console.WriteLine("*** Input Your Money ***"); //Let user know what we want

@@ -1,4 +1,4 @@
-1.   *   Sprite   *   50
-2.   *   Coke   *   80
-3.   *   Fanta   *   75
-4.   *   Pepsi   *   60 
+1.   *   Sprite   *   50p
+2.   *   Coke   *   80p
+3.   *   Fanta   *   75p
+4.   *   Pepsi   *   60p
