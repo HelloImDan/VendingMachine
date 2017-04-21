@@ -62,11 +62,52 @@ namespace VendingMachine
         }
         #endregion
 
+        #region Item Selection
         public void ItemSelection()
         {
             Console.Clear();    //Clear the console for text to be written
+            Console.WriteLine("********* Choose your item *********");  //Tell user what to do
+            Console.WriteLine("");  //Spacer
 
+            string[] items = File.ReadAllLines(@"../../items.txt"); //Read all lines of the 'items.txt' file and store each line in the array
+            foreach (string n in items)  //For each item in the array 'items'
+            {
+                Console.WriteLine(n);    //Write the line
+            }
+            Console.WriteLine("");  //Spacer
+            Console.WriteLine("********* Enter Your Choice *********");  //Tell user what to do
+
+            string itemChoice = Console.ReadLine(); //Users selected item 
+            switch (itemChoice)
+            {
+                //If inputValCoins is 10, 20 or 50
+                case "1":
+                case "2":
+                case "3":
+                case "4":
+                    int item = Convert.ToInt16(itemChoice); //Convert to a int and store as coins
+                    int i = item - 1; // Slected item -1 because it is in array
+                    string[] itemStrip = items[i].Replace(" ", "").Split('*');
+                    Console.WriteLine("Are you sure you want to purchase " + itemStrip[1] + "? [y,n]"); //Confirmation of purchase
+                    string ans = Console.ReadLine(); // Get users answer
+                        switch (ans) //switch case for users answer
+                        {
+                            case "y":
+                                Console.WriteLine(itemStrip);
+                                Console.ReadLine();
+                                //PurchaseItem(); //purchase item function
+                                break;
+                            case "n":
+                                ItemSelection(); //reset chosen item and restart
+                                break;
+                        }
+                    break;  //Exit the switch case
+                default:
+                    Console.WriteLine("*** Please enter a valid item ID [1, 2, 3, 4] ***");    //Tell user the value was not accepted and show accepted values
+                    break;  //Exit the switch case
+
+            }
         }
-        
+        #endregion
     }
 }
